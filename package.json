@@ -1,0 +1,52 @@
+{
+  "name": "schnellen",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "vue-cli-service serve --open",
+    "build": "vue-cli-service build --modern",
+    "release": "./release.sh",
+    "pretty": "prettier --write './*.{js,vue,json,md}' './**/*.{js,vue,json,md}'"
+  },
+  "dependencies": {
+    "v-icon": "^0.4.0",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.1.1",
+    "@vue/cli-service": "^3.1.4",
+    "prettier": "^1.15.2",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
+    "raw-loader": "^0.5.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "prettier": {
+    "printWidth": 999,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": false,
+    "arrowParens": "avoid",
+    "proseWrap": "never"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 99"
+  ],
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  }
+}
