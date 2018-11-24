@@ -27,9 +27,9 @@
         tr
           td(v-for="p in players")
             .btn-group
-              button(@click.prevent="addPoint(p)"): v-icon(name="plus")
-              button(@click.prevent="subPoint(p)"): v-icon(name="minus")
-              button(@click.prevent="skipRound(p)" :disabled="history[p][history[p].length - 1] < 6"): v-icon(name="leave")
+              button(@click.prevent="addPoint(p)" :disabled="round[p] === 5"): v-icon(name="plus")
+              button(@click.prevent="subPoint(p)" :disabled="round[p] === 0"): v-icon(name="minus")
+              button(@click.prevent="skipRound(p)" :disabled="history[p][history[p].length - 1] < 6 || round[p] === null"): v-icon(name="leave")
         //tr
           td(v-for="p in players")
             input(type="radio" name="currentPlayer")
@@ -38,8 +38,8 @@
         small x
         span {{multiplier}}
       button(@click.prevent="addMult()"): v-icon(name="plus")
-      button(@click.prevent="subMult()"): v-icon(name="minus")
-    button.next(@click.prevent="nextRound"): v-icon(name="next")
+      button(@click.prevent="subMult()" :disabled="multiplier === 1"): v-icon(name="minus")
+    button.next(@click.prevent="nextRound" :disabled="sumPoints < 5"): v-icon(name="next")
 </template>
 
 <script>
