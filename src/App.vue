@@ -49,30 +49,29 @@ export default {
   name: 'app',
   data() {
     return {
-      step: 2,
+      step: 1,
       newPlayerName: '',
-      startPoints: 15, //0,
-      players: ['Mama', 'Papa', 'Pati', 'Domi'], //[],
+      startPoints: 0,
+      players: [],
       rounds: 1,
       multiplier: 1,
-      history: {Mama: [15], Papa: [15], Pati: [15], Domi: [15]}, //{},
-      round: {Mama: 0, Papa: 0, Pati: 0, Domi: 0} //{}
+      history: {},
+      round: {}
     }
   },
   methods: {
     addPlayer() {
       console.log(this.players)
       this.players.push(this.newPlayerName)
-      this.history[this.newPlayerName] = []
       this.newPlayerName = ''
     },
     removePlayer(i) {
-      delete this.history[this.players[i]]
       this.players.splice(i, 1)
     },
     startGame() {
-      for (const p in this.history) {
-        this.history[p].push(this.startPoints)
+      for (const p of this.players) {
+        Vue.set(this.history, p, [Number(this.startPoints)])
+        Vue.set(this.round, p, 0)
       }
       this.step++
     },
