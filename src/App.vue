@@ -7,7 +7,7 @@
     div(v-for="p, i in players") {{p}}
       button(@click.prevent="removePlayer(i)"): v-icon(name="times")
     form(@submit.prevent="addPlayer")
-      input(type="text" v-model="newPlayerName")
+      input(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
       button(type="submit"): v-icon(name="plus")
     button(:disabled="startPoints < 1 || players.length < 1" @click.prevent="startGame") Start
   template(v-if="step === 2")
@@ -51,7 +51,7 @@ export default {
     return {
       step: 1,
       newPlayerName: '',
-      startPoints: 0,
+      startPoints: 15,
       players: [],
       rounds: 1,
       multiplier: 1,
@@ -59,11 +59,19 @@ export default {
       round: {}
     }
   },
+  computed: {
+    sumPoints() {
+      return Object.values(this.round).reduce((sum, points) => {
+        return sum += points
+      }, 0)
+    }
+  },
   methods: {
     addPlayer() {
       console.log(this.players)
       this.players.push(this.newPlayerName)
       this.newPlayerName = ''
+      this.$refs.newPlayerInput.focus()
     },
     removePlayer(i) {
       this.players.splice(i, 1)
@@ -76,6 +84,10 @@ export default {
       this.step++
     },
     addPoint(p) {
+      if (this.sumPoints >= 5) {
+        return
+      }
+
       this.round[p] = Math.min(this.round[p] + 1, 5)
     },
     subPoint(p) {
@@ -109,6 +121,8 @@ export default {
 
 <style lang="stylus">
 $blue = #156FA4
+$grey = #ccc
+$grey-light = lighten($grey, 10%)
 
 *
   outline: none
@@ -142,6 +156,11 @@ button
   color: #fff
   background: $blue
   cursor: pointer
+
+  &:disabled
+    background: $grey-light
+    border: $grey
+    cursor: default
 
 label
   display: block
