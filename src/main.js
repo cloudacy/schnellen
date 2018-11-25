@@ -8,12 +8,13 @@ Vue.config.devtools = false
 
 Vue.use(Icon, {
   icons: {
-    plus: 'plus',
-    minus: 'minus',
-    times: 'times',
-    leave: 'sign-out',
     check: 'check',
-    next: 'angle-right'
+    leave: 'sign-out',
+    minus: 'minus',
+    next: 'angle-right',
+    plus: 'plus',
+    times: 'times',
+    undo: 'undo'
   }
 })
 

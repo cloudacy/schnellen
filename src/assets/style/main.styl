@@ -1,0 +1,64 @@
+@import "~averi-style/src/normalize.styl"
+@import "vars.styl"
+@import "~averi-style/src/functions.styl"
+@import "~averi-style/src/mixins.styl"
+@import "~averi-style/src/fonts.styl"
+@import "~averi-style/src/typography.styl"
+@import "~averi-style/src/responsive.styl"
+@import "~averi-style/src/columns.styl"
+@import "~averi-style/src/table.styl"
+@import "~averi-style/src/form.styl"
+@import "~averi-style/src/card.styl"
+@import "~averi-style/src/code.styl"
+@import "~averi-style/src/tooltip.styl"
+
+#app
+  padding: 16px 16px 0 16px
+
+.players
+  color: white
+
+  button
+    padding: 0
+    margin-left: 0.5em
+    color: inherit
+    background: none
+    border: none
+    font: inherit
+    font-size: 12px
+    appearance: none
+
+  .badge + .badge
+    margin-left: 4px
+
+.point-ctl
+  font-size: 14px
+
+.table-wrap
+  margin-bottom: 50px + 16px + 16px // space for next button
+
+footer
+  position: fixed
+  bottom: 16px
+  left: 16px
+  right: 16px
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.mult
+  display: flex
+  align-items: center
+  font-size: 14px
+
+  .btn
+    border: none
+
+  .rad
+    font-size: 12px
+
+.next
+  padding: 0.5em
+  border: none
+  font-size: 1.5em
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.5)

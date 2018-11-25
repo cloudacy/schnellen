@@ -9,6 +9,7 @@
     "pretty": "prettier --write './*.{js,vue,json,md}' './**/*.{js,vue,json,md}'"
   },
   "dependencies": {
+    "averi-style": "^1.1.3",
     "v-icon": "^0.4.0",
     "vue": "^2.5.17"
   },
