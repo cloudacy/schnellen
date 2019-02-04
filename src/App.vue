@@ -30,12 +30,9 @@
             td(v-for="p in players")
               div {{round[p] !== null ? round[p] + ' Stiche' : 'Raus'}}
               .btn-group.point-ctl
-                button.btn.primary(:disabled="round[p] === 5" @click.prevent="addPoint(p)"): v-icon(name="plus")
+                button.btn.primary(:disabled="round[p] > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): v-icon(name="plus")
                 button.btn.primary(v-if="round[p] > 0" @click.prevent="subPoint(p)"): v-icon(name="minus")
                 button.btn.primary(v-if="history[p][history[p].length - 1] > 5 && round[p] === 0" @click.prevent="skipRound(p)"): v-icon(name="leave")
-          //tr
-            td(v-for="p in players")
-              input(type="radio" name="currentPlayer")
     footer
       .mult
         .badge.red.rad
@@ -64,14 +61,11 @@ export default {
   },
   computed: {
     sumPoints() {
-      return Object.values(this.round).reduce((sum, points) => {
-        return sum += points
-      }, 0)
+      return Object.values(this.round).reduce((sum, points) => sum + points, 0)
     }
   },
   methods: {
     addPlayer() {
-      console.log(this.players)
       this.players.push(this.newPlayerName)
       this.newPlayerName = ''
       this.$refs.newPlayerInput.focus()
@@ -87,10 +81,6 @@ export default {
       this.step++
     },
     addPoint(p) {
-      if (this.sumPoints >= 5) {
-        return
-      }
-
       this.round[p] = Math.min(this.round[p] + 1, 5)
     },
     subPoint(p) {
