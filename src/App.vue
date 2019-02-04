@@ -81,19 +81,19 @@ export default {
       this.step++
     },
     addPoint(p) {
-      this.round[p] = Math.min(this.round[p] + 1, 5)
+      this.round[p]++
     },
     subPoint(p) {
-      this.round[p] = Math.max(this.round[p] - 1, 0)
+      this.round[p]--
     },
     skipRound(p) {
       this.round[p] = null
     },
     addMult() {
-      this.multiplier *= 2
+      this.multiplier <<<= 1
     },
     subMult() {
-      this.multiplier = Math.max(this.multiplier / 2, 1)
+      this.multiplier >>>= 1
     },
     nextRound() {
       for (const p in this.round) {
