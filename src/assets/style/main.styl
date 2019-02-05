@@ -2,7 +2,7 @@
 @import "vars.styl"
 @import "~averi-style/src/functions.styl"
 @import "~averi-style/src/mixins.styl"
-@import "~averi-style/src/fonts.styl"
+@import "~averi-style/src/fonts/NunitoSans/nunitosans.styl"
 @import "~averi-style/src/typography.styl"
 @import "~averi-style/src/responsive.styl"
 @import "~averi-style/src/columns.styl"
@@ -11,9 +11,6 @@
 @import "~averi-style/src/card.styl"
 @import "~averi-style/src/code.styl"
 @import "~averi-style/src/tooltip.styl"
-
-#app
-  padding: 16px 16px 0 16px
 
 .players
   color: white
@@ -28,8 +25,20 @@
     font-size: 12px
     appearance: none
 
-  .badge + .badge
-    margin-left: 4px
+  .badge
+    font-size: 14px
+
+    + .badge
+      margin-left: 4px
+
+.table
+  th
+  td
+    padding: 0.5em
+    text-align: center
+
+  tfoot
+    font-size: 13px
 
 .point-ctl
   font-size: 14px
@@ -61,4 +70,3 @@ footer
   padding: 0.5em
   border: none
   font-size: 1.5em
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.5)

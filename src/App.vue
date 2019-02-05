@@ -1,46 +1,47 @@
 <template lang="pug">
-#app
+#app.p-3
   template(v-if="step === 1")
     label.lbl Startpunkte
     input.input(type="number" v-model="startPoints")
     label.lbl Spieler
-    .players.d-flex.mb-2
-      .badge.primary(v-for="p, i in players") {{p}}
-        button(@click.prevent="removePlayer(i)"): v-icon(name="times")
-    form.d-flex.align-items-center.mb-3(@submit.prevent="addPlayer")
-      input.input.mr-3(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
-      button.btn.primary(type="submit"): v-icon(name="plus")
-    button.btn.primary(:disabled="startPoints < 1 || players.length < 1" @click.prevent="startGame") Start
+    .players.d-flex
+      .badge.primary.mb-2(v-for="_, p in round") {{p}}
+        button(@click.prevent="removePlayer(p)"): v-icon(name="times" center)
+    form.btn-group.w-100.mb-3(@submit.prevent="addPlayer")
+      input.input(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
+      button.btn(type="submit"): v-icon(name="plus")
+    button.btn.primary(:disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame") Start
   template(v-if="step === 2")
     div.mb-2
       b Runde:
-      span &nbsp;{{rounds}}
-      b.ml-2 Geber:
-      span &nbsp;{{players[(rounds - 1) % players.length]}}
+      | &nbsp;{{rounds}}
     .table-wrap
       table.table
         thead
           tr
-            th(v-for="p in players") {{p}}
+            th(v-for="_, p in round"): small {{p}}
         tbody
           tr(v-for="i in rounds")
-            td(v-for="p in players") {{history[p][i - 1]}}
+            td(v-for="v, p in history") {{v[i - 1]}}
         tfoot
           tr
-            td(v-for="p in players")
-              div {{round[p] !== null ? round[p] + ' Stiche' : 'Raus'}}
+            td(v-for="v, p in round")
+              div(v-if="v !== null")
+                b {{v}}
+                | &nbsp;Stiche
+              div(v-else) Raus
               .btn-group.point-ctl
-                button.btn.primary(:disabled="round[p] > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): v-icon(name="plus")
-                button.btn.primary(v-if="round[p] > 0" @click.prevent="subPoint(p)"): v-icon(name="minus")
-                button.btn.primary(v-if="history[p][history[p].length - 1] > 5 && round[p] === 0" @click.prevent="skipRound(p)"): v-icon(name="leave")
+                button.btn.primary.small(:disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): v-icon(name="plus")
+                button.btn.primary.small(v-if="v > 0" @click.prevent="subPoint(p)"): v-icon(name="minus")
+                button.btn.primary.small(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): v-icon(name="leave")
     footer
       .mult
         .badge.red.rad
           small x
-          span {{multiplier}}
-        button.btn.primary.ml-2(@click.prevent="addMult()"): v-icon(name="plus")
-        button.btn.primary.ml-2(@click.prevent="subMult()" :disabled="multiplier === 1"): v-icon(name="minus")
-      button.btn.primary.round(:disabled="rounds < 2" @click.prevent="undoRound"): v-icon(name="undo")
+          | {{multiplier}}
+        button.btn.primary.small.ml-2(@click.prevent="addMult()"): v-icon(name="plus")
+        button.btn.primary.small.ml-2(@click.prevent="subMult()" :disabled="multiplier === 1"): v-icon(name="minus")
+      button.btn.primary.small.round(:disabled="rounds < 2" @click.prevent="undoRound"): v-icon(name="undo")
       button.btn.primary.round.next(@click.prevent="nextRound"): v-icon(name="next")
 </template>
 
@@ -52,7 +53,6 @@ export default {
       step: 1,
       newPlayerName: '',
       startPoints: 15,
-      players: [],
       rounds: 1,
       multiplier: 1,
       history: {},
@@ -66,18 +66,16 @@ export default {
   },
   methods: {
     addPlayer() {
-      this.players.push(this.newPlayerName)
+      this.$set(this.history, this.newPlayerName, [Number(this.startPoints)])
+      this.$set(this.round, this.newPlayerName, 0)
       this.newPlayerName = ''
       this.$refs.newPlayerInput.focus()
     },
-    removePlayer(i) {
-      this.players.splice(i, 1)
+    removePlayer(pl) {
+      this.$delete(this.history, pl)
+      this.$delete(this.round, pl)
     },
     startGame() {
-      for (const p of this.players) {
-        this.$set(this.history, p, [Number(this.startPoints)])
-        this.$set(this.round, p, 0)
-      }
       this.step++
     },
     addPoint(p) {
@@ -90,10 +88,10 @@ export default {
       this.round[p] = null
     },
     addMult() {
-      this.multiplier <<<= 1
+      this.multiplier <<= 1
     },
     subMult() {
-      this.multiplier >>>= 1
+      this.multiplier >>= 1
     },
     nextRound() {
       for (const p in this.round) {
@@ -112,7 +110,6 @@ export default {
       for (const p in this.round) {
         this.history[p].splice(-1, 1)
         this.round[p] = 0
-        console.log(this.history[p])
       }
       this.rounds--
     }

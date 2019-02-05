@@ -1,5 +1,5 @@
 module.exports = {
-  baseUrl: '/schnellen',
+  publicPath: '/schnellen',
   devServer: {
     publicPath: '/schnellen'
   }
