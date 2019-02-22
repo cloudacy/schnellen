@@ -1,15 +1,28 @@
 <template lang="pug">
-#app.p-3
+#app.p-4
   template(v-if="step === 1")
-    label.lbl Startpunkte
-    input.input(type="number" v-model="startPoints")
-    label.lbl Spieler
+    h1 Spiel starten
+    p.text-muted.mb-3 Bevor das Spiel beginnen kann, müssen der Startpunktestand sowie alle Teilnehmer eingetragen werden.
+
+    label.input.mb-3
+      v-icon(name="clock")
+      .f-1
+        .lbl Startpunkte
+        input(type="number" v-model="startPoints")
+
+    form.mb-3(@submit.prevent="addPlayer")
+      label.input
+        v-icon(name="users")
+        .f-1
+          .lbl Spieler
+          input(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
+        div
+          button.btn.primary(type="submit" :disabled="newPlayerName === ''"): v-icon(name="plus")
+
     .players.d-flex
-      .badge.primary.mb-2(v-for="_, p in round") {{p}}
+      .badge.primary.mb-3(v-for="_, p in round") {{p}}
         button(@click.prevent="removePlayer(p)"): v-icon(name="times" center)
-    form.btn-group.w-100.mb-3(@submit.prevent="addPlayer")
-      input.input(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
-      button.btn(type="submit"): v-icon(name="plus")
+
     button.btn.primary(:disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame") Start
   template(v-if="step === 2")
     div.mb-2
