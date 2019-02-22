@@ -17,7 +17,7 @@
           .lbl Spieler
           input(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
         div
-          button.btn.primary(type="submit" :disabled="newPlayerName === ''"): v-icon(name="plus")
+          button.btn.primary.btn-round(type="submit" :disabled="newPlayerName === ''"): v-icon(name="plus")
 
     .players.d-flex
       .badge.primary.mb-3(v-for="_, p in round") {{p}}
