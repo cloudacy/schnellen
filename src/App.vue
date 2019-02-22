@@ -46,7 +46,9 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'app',
   data() {
     return {
@@ -114,7 +116,7 @@ export default {
       this.rounds--
     }
   }
-}
+})
 </script>
 
 <style lang="stylus">

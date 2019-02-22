@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Icon from 'v-icon'
 
-import App from './App.vue'
+import App from '@/App.vue'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
