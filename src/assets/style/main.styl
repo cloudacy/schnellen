@@ -1,4 +1,3 @@
-@import "~averi-style/src/normalize.styl"
 @import "vars.styl"
 @import "~averi-style/src/functions.styl"
 @import "~averi-style/src/mixins.styl"
@@ -13,15 +12,35 @@
 @import "~averi-style/src/tooltip.styl"
 
 #app
+  min-height: 100vh
   background: #fcfcfc
+
+.icon-big
+  min-width: 24px
+  width: 24px
+  min-height: 24px
+  height: 24px
+
+  &.center
+    transform: translateY(5px);
+
+  &.right
+    margin-right: 16px
+
+.f-1
+  flex: 1
+
+.flex-wrap
+  flex-wrap: wrap
 
 .btn-round
   border-radius: 50%
   padding: 8px
-  font-size: 14px
+  // font-size: 14px
 
 .players
   color: white
+  margin: 0 -4px 0 -4px
 
   button
     padding: 0
@@ -35,9 +54,7 @@
 
   .badge
     font-size: 14px
-
-    + .badge
-      margin-left: 4px
+    margin: 0 4px 8px 4px
 
 .table
   th

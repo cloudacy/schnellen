@@ -1,27 +1,25 @@
 <template lang="pug">
 #app.p-4
   template(v-if="step === 1")
-    h1 Spiel starten
+    h1 Schnellen
+
+    h2
+      v-icon(name="cog" center right)
+      | Spieloptionen
     p.text-muted.mb-3 Bevor das Spiel beginnen kann, müssen der Startpunktestand sowie alle Teilnehmer eingetragen werden.
 
-    label.input.mb-3
-      v-icon(name="clock")
-      .f-1
-        .lbl Startpunkte
-        input(type="number" v-model="startPoints")
+    InputGroup.mb-3(icon="clock")
+      TextInput(label="Startpunkte" type="number" v-model="startPoints" required)
 
     form.mb-3(@submit.prevent="addPlayer")
-      label.input
-        v-icon(name="users")
-        .f-1
-          .lbl Spieler
-          input(type="text" ref="newPlayerInput" v-model="newPlayerName" placeholder="Name" required)
-        div
-          button.btn.primary.btn-round(type="submit" :disabled="newPlayerName === ''"): v-icon(name="plus")
-
-    .players.d-flex
-      .badge.primary.mb-3(v-for="_, p in round") {{p}}
-        button(@click.prevent="removePlayer(p)"): v-icon(name="times" center)
+      InputGroup(icon="users")
+        .d-flex.align-items-flex-end.mb-3
+          TextInput(label="Spieler" placeholder="Name" v-model="newPlayerName" required)
+          .ml-3.mb-2
+            button.btn.primary.btn-round(type="submit" :disabled="newPlayerName === ''"): v-icon(name="plus")
+        .players.d-flex.flex-wrap
+          .badge.primary(v-for="_, p in round") {{p}}
+            button(@click.prevent="removePlayer(p)"): v-icon(name="times" center)
 
     button.btn.primary(:disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame") Start
   template(v-if="step === 2")
@@ -43,13 +41,13 @@
                 b {{v}}
                 | &nbsp;Stiche
               div(v-else) Raus
-              .btn-group.point-ctl
+              .btn-group.primary.point-ctl
                 button.btn.primary.small(:disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): v-icon(name="plus")
                 button.btn.primary.small(v-if="v > 0" @click.prevent="subPoint(p)"): v-icon(name="minus")
                 button.btn.primary.small(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): v-icon(name="sign-out")
     footer
       .mult
-        .badge.red.rad
+        .badge.danger.rad
           small x
           | {{multiplier}}
         button.btn.primary.small.ml-2(@click.prevent="addMult()"): v-icon(name="plus")
@@ -61,8 +59,15 @@
 <script>
 import Vue from 'vue'
 
+import InputGroup from '@/components/InputGroup.vue'
+import TextInput from '@/components/TextInput.vue'
+
 export default Vue.extend({
   name: 'app',
+  components: {
+    InputGroup,
+    TextInput
+  },
   data() {
     return {
       step: 1,
