@@ -10,9 +10,8 @@ Vue.use(Icon, {
   icons: {
     clock: 'clock',
     check: 'check',
-    leave: 'sign-out',
+    cog: 'cog',
     minus: 'minus',
-    next: 'angle-right',
     plus: 'plus',
     times: 'times',
     undo: 'undo',
