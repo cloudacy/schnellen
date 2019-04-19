@@ -46,7 +46,7 @@
               .btn-group.point-ctl
                 button.btn.primary.small(:disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): v-icon(name="plus")
                 button.btn.primary.small(v-if="v > 0" @click.prevent="subPoint(p)"): v-icon(name="minus")
-                button.btn.primary.small(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): v-icon(name="leave")
+                button.btn.primary.small(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): v-icon(name="sign-out")
     footer
       .mult
         .badge.red.rad
@@ -55,7 +55,7 @@
         button.btn.primary.small.ml-2(@click.prevent="addMult()"): v-icon(name="plus")
         button.btn.primary.small.ml-2(@click.prevent="subMult()" :disabled="multiplier === 1"): v-icon(name="minus")
       button.btn.primary.small.round(:disabled="rounds < 2" @click.prevent="undoRound"): v-icon(name="undo")
-      button.btn.primary.round.next(@click.prevent="nextRound"): v-icon(name="next")
+      button.btn.primary.round.next(@click.prevent="nextRound"): v-icon(name="angle-right")
 </template>
 
 <script>
