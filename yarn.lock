@@ -1410,10 +1410,10 @@ autoprefixer@^9.5.1:
     postcss "^7.0.14"
     postcss-value-parser "^3.3.1"
 
-averi-style@^1.5.3:
-  version "1.5.3"
-  resolved "https://averi.at:4873/averi-style/-/averi-style-1.5.3.tgz#67c71ac3c7895abf478e084cd82f81fca22075d0"
-  integrity sha512-wpmAO1TNnCnTrvkYE1yWFC8ynrtcqfudilqqkKu0+/VkC6KC9HavXDUMnpp2oYD6e13uuaFnLltpF6syvBnbTg==
+averi-style@^1.5.4:
+  version "1.5.4"
+  resolved "https://averi.at:4873/averi-style/-/averi-style-1.5.4.tgz#0bdd1703e8971f0484125c2fceee0f8f3bb36aff"
+  integrity sha512-WNKS2G+umWjjnQSuTMRzbgFYHxpSDGsgRAe+ACCE8Xh+Ei4HFmGEy0fFKnK3TKMffm6a5ZQ9dtqV7oanTmGd6g==
 
 aws-sign2@~0.7.0:
   version "0.7.0"

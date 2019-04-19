@@ -9,7 +9,7 @@
     "start": "vue-cli-service serve --open"
   },
   "dependencies": {
-    "averi-style": "^1.5.3",
+    "averi-style": "^1.5.4",
     "v-icon": "^1.0.0",
     "vue": "^2.6.10"
   },
