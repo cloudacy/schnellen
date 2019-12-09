@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  font-family: $body-font-family;
+  font-weight: $body-font-weight;
+  font-size: $body-font-size;
+  line-height: 1.5;
+}
+
+b,
+strong {
+  font-weight: $font-weight-bold;
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-family: Montserrat, sans-serif;
+  font-weight: $header-font-weight;
+}
+
+h1 {
+  font-size: $h1-font-size;
+}
+
+h2 {
+  font-size: $h2-font-size;
+}
+
+p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+button {
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 1.5;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  appearance: none;
+}
