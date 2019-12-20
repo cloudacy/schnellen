@@ -3,59 +3,60 @@
   template(v-if="step === 1")
     h1 Schnellen
 
-    h2
-      font-awesome-icon(icon="cog")
-      | Spieloptionen
-    p.text-muted.mb-3 Bevor das Spiel beginnen kann, müssen der Startpunktestand sowie alle Teilnehmer eingetragen werden.
-
-    font-awesome-icon(icon="clock")
-    TextInput(label="Startpunkte" type="number" v-model="startPoints" required)
-
     form.mb-3(@submit.prevent="addPlayer")
-      font-awesome-icon(icon="users")
-      .d-flex.align-items-flex-end.mb-3
-        TextInput(id="new-player-input" label="Spieler" placeholder="Name" v-model="newPlayerName" required)
-        .ml-3.mb-2
-          button.btn.primary.btn-round(type="submit" :disabled="newPlayerName === ''"): font-awesome-icon(icon="plus")
-      .players.d-flex.flex-wrap
-        .badge.primary(v-for="_, p in round") {{p}}
-          button(@click.prevent="removePlayer(p)"): font-awesome-icon(icon="times")
+      TextInput(id="start-points" type="number" label="Startpunkte" icon="clock" placeholder="15" v-model="startPoints" required)
 
-    button.btn.primary(:disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame") Start
+      .d-flex.align-items-flex-end.mb-3
+        TextInput(id="new-player-input" label="Spieler" icon="users" placeholder="John" v-model="newPlayerName" required)
+        .ml-3.mb-2
+          button.btn.btn-primary(type="submit" :disabled="newPlayerName === ''")
+            span hinzufügen
+            font-awesome-icon.icon(icon="plus")
+
+      .players.d-flex.flex-wrap
+        div Gewählte Spieler:
+        div(v-for="_, p in round")
+          span {{p}}
+          button.btn.btn-danger.btn-small.btn-icon(@click.prevent="removePlayer(p)")
+            font-awesome-icon.icon(icon="times")
+
+      button.btn.btn-primary(:disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame")
+        span Start
+        font-awesome-icon.icon(icon="long-arrow-alt-right")
+
   template(v-if="step === 2")
-    header
-      table
+    .horizontal-overflow-scroll
+      table.table.text-center
         thead
           tr
-            th(v-for="_, p in round"): small {{p}}
-    table.table
-      tbody
-        tr(v-for="i in rounds")
-          td(v-for="v, p in history") {{v[i - 1]}}
-      tfoot
-        tr
-          td(v-for="v, p in round")
-            div(v-if="v !== null")
-              b {{v}}
-              | &nbsp;Stiche
-            div(v-else) Raus
-            .btn-group.primary.point-ctl
-              button.btn.primary.small(:disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): font-awesome-icon(icon="plus")
-              button.btn.primary.small(v-if="v > 0" @click.prevent="subPoint(p)"): font-awesome-icon(icon="minus")
-              button.btn.primary.small(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): font-awesome-icon(icon="sign-out-alt")
+            th(v-for="_, p in round"): b: small {{p}}
+        tbody
+          tr(v-for="i in rounds")
+            td(v-for="v, p in history") {{v[i - 1]}}
+        tfoot
+          tr
+            td(v-for="v, p in round")
+              div(v-if="v !== null")
+                b {{v}}
+                | &nbsp;Stiche
+              div(v-else) Raus
+              .btn-group
+                button.btn.btn-primary.btn-small.btn-icon(:disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): font-awesome-icon(icon="plus")
+                button.btn.btn-primary.btn-small.btn-icon(v-if="v > 0" @click.prevent="subPoint(p)"): font-awesome-icon(icon="minus")
+                button.btn.btn-primary.btn-small.btn-icon(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): font-awesome-icon(icon="sign-out-alt")
+
     footer.mb-2
       .round
-        b Runde:
-        | &nbsp;{{rounds}}
+        b Runde {{rounds}}
       .multiplier
+        button.btn.btn-primary.btn-small.btn-icon(@click.prevent="subMult()" :disabled="multiplier === 1"): font-awesome-icon(icon="minus")
         .badge.danger.rad
           small x
           | {{multiplier}}
-        button.btn.primary.small.ml-2(@click.prevent="addMult()"): font-awesome-icon(icon="plus")
-        button.btn.primary.small.ml-2(@click.prevent="subMult()" :disabled="multiplier === 1"): font-awesome-icon(icon="minus")
-      button.btn.primary.small.round(:disabled="rounds < 2" @click.prevent="undoRound")
+        button.btn.btn-primary.btn-small.btn-icon(@click.prevent="addMult()"): font-awesome-icon(icon="plus")
+      button.btn.btn-danger.btn-small.btn-icon(:disabled="rounds < 2" @click.prevent="undoRound")
         font-awesome-icon(icon="undo")
-      button.btn.primary.round.next(@click.prevent="nextRound")
+      button.btn.btn-primary.btn-icon.next(@click.prevent="nextRound")
         font-awesome-icon(icon="angle-right")
 </template>
 

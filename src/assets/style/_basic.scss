@@ -13,7 +13,7 @@ body {
 
 b,
 strong {
-  font-weight: $font-weight-bold;
+  font-variation-settings: 'wght' 500;
 }
 
 a {
@@ -27,7 +27,7 @@ h3,
 h4 {
   margin-top: 0;
   margin-bottom: 0.5em;
-  font-family: Montserrat, sans-serif;
+  font-family: Lato, sans-serif;
   font-weight: $header-font-weight;
 }
 
@@ -44,6 +44,10 @@ p {
   margin-bottom: 8px;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 button {
   font-size: inherit;
   font-family: inherit;
@@ -58,4 +62,12 @@ textarea {
   font-size: inherit;
   font-weight: inherit;
   appearance: none;
+}
+
+::placeholder,
+::-webkit-input-placeholder,
+:-ms-input-placeholder,
+::-ms-input-placeholder {
+  color: $gray;
+  opacity: 1;
 }

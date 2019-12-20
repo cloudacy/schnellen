@@ -1,7 +1,9 @@
 <template lang="pug">
-label.input(:class="{focus}")
-  .lbl {{label}}
-  input.text(:value="value" :type="type" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="input" @focus="focus = true" @blur="focus = false")
+label.field(:class="{focus}")
+  .label
+    font-awesome-icon.icon(v-if="icon" :icon="icon")
+    span {{label}}
+  input(:value="value" :type="type" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="input" @focus="focus = true" @blur="focus = false")
 </template>
 
 <script lang="ts">
@@ -17,6 +19,10 @@ export default Vue.extend({
     label: {
       type: String,
       required: true
+    },
+    icon: {
+      type: String,
+      required: false
     },
     type: {
       type: String,
