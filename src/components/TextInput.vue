@@ -1,68 +1,78 @@
 <template>
-  <label class="field" :class="{focus}">
+  <label class="field" :class="{ focus }">
     <div class="label">
-      <span class="icon" v-if="icon">i</span>
-      <span>{{label}}</span>
+      <font-awesome-icon class="icon" v-if="icon" :icon="icon" />
+      <span>{{ label }}</span>
     </div>
-    <input :type="type" :value="modelValue" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="input" @focus="focus = true" @blur="focus = false">
+    <input
+      :type="type"
+      :value="modelValue"
+      :placeholder="placeholder"
+      :required="required"
+      :disabled="disabled"
+      :autofocus="autofocus"
+      @input="input"
+      @focus="focus = true"
+      @blur="focus = false"
+    />
   </label>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: 'TextInput',
+  name: "TextInput",
   props: {
     modelValue: {
       type: [String, Number],
-      required: false
+      required: false,
     },
     label: {
       type: String,
-      required: true
+      required: true,
     },
     icon: {
       type: String,
-      required: false
+      required: false,
     },
     type: {
       type: String,
       required: false,
-      default: 'text'
+      default: "text",
     },
     placeholder: {
       type: String,
       required: false,
-      default: ''
+      default: "",
     },
     required: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     autofocus: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props, ctx) {
-    const focus = ref(false)
+    const focus = ref(false);
 
     const input = (evt: Event): void => {
-      ctx.emit('update:modelValue', (evt.target as HTMLInputElement).value)
-    }
+      ctx.emit("update:modelValue", (evt.target as HTMLInputElement).value);
+    };
 
     return {
       focus,
-      input
-    }
-  }
-})
+      input,
+    };
+  },
+});
 </script>
