@@ -1,7 +1,11 @@
 version: '3.7'
 services:
   app:
+    container_name: games-schnellen
     build: .
-    restart: always
-    ports:
-      - '2000:80'
+    restart: unless-stopped
+    networks:
+      - traefik
+networks:
+  traefik:
+    external: true
