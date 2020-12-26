@@ -9,4 +9,3 @@ docker-compose.yml
 
 *.sh
 *.md
-*.lock

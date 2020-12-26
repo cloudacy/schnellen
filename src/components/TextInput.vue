@@ -1,18 +1,20 @@
-<template lang="pug">
-label.field(:class="{focus}")
-  .label
-    font-awesome-icon.icon(v-if="icon" :icon="icon")
-    span {{label}}
-  input(:value="value" :type="type" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="input" @focus="focus = true" @blur="focus = false")
+<template>
+  <label class="field" :class="{focus}">
+    <div class="label">
+      <span class="icon" v-if="icon">i</span>
+      <span>{{label}}</span>
+    </div>
+    <input :type="type" :value="modelValue" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="input" @focus="focus = true" @blur="focus = false">
+  </label>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, ref } from 'vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'TextInput',
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
       required: false
     },
@@ -50,14 +52,16 @@ export default Vue.extend({
       default: false
     }
   },
-  data() {
-    return {
-      focus: false
+  setup(props, ctx) {
+    const focus = ref(false)
+
+    const input = (evt: Event): void => {
+      ctx.emit('update:modelValue', (evt.target as HTMLInputElement).value)
     }
-  },
-  methods: {
-    input(evt: Event): void {
-      this.$emit('input', (evt.target as HTMLInputElement).value)
+
+    return {
+      focus,
+      input
     }
   }
 })

@@ -1,146 +1,195 @@
-<template lang="pug">
-#app.p-4
-  template(v-if="step === 1")
-    h1 Schnellen
+<template>
+  <div id="app" class="p-4">
+    <template v-if="step === 1">
+      <h1>Schnellen</h1>
 
-    form.mb-3(@submit.prevent="addPlayer")
-      TextInput(id="start-points" type="number" label="Startpunkte" icon="clock" placeholder="15" v-model="startPoints" required)
+      <form class="mb-3" @submit.prevent="addPlayer">
+        <text-input id="start-points" type="number" label="Startpunkte" icon="clock" placeholder="15" v-model="startPoints" required />
 
-      .d-flex.align-items-flex-end.mb-3
-        TextInput(id="new-player-input" label="Spieler" icon="users" placeholder="John" v-model="newPlayerName" required)
-        .ml-3.mb-2
-          button.btn.btn-primary(type="submit" :disabled="newPlayerName === ''")
-            span hinzufügen
-            font-awesome-icon.icon(icon="plus")
+        <div class="d-flex align-items-flex-end mb-3">
+          <text-input id="new-player-input" ref="newPlayerInput" label="Spieler" icon="users" placeholder="John" v-model="newPlayerName" required />
+          <div class="ml-3 mb-2">
+            <button class="btn btn-primary" type="submit" :disabled="newPlayerName === ''">
+              <font-awesome-icon class="icon" icon="plus" />
+              <span>Hinzufügen</span>
+            </button>
+          </div>
+        </div>
+      </form>
 
-      .players.d-flex.flex-wrap
-        div Gewählte Spieler:
-        div(v-for="_, p in round")
-          span {{p}}
-          button.btn.btn-danger.btn-small.btn-icon(@click.prevent="removePlayer(p)")
-            font-awesome-icon.icon(icon="times")
+      <div class="players d-flex flex-wrap">
+        <div>Gewählte Spieler:</div>
+        <div v-for="(_, p) in round" :key="p">
+          <span>{{p}}</span>
+          <button class="btn btn-danger btn-small btn-icon" @click.prevent="removePlayer(p)">
+            <font-awesome-icon class="icon" icon="times" />
+          </button>
+        </div>
+      </div>
 
-      button.btn.btn-primary(:disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame")
-        span Start
-        font-awesome-icon.icon(icon="long-arrow-alt-right")
-
-  template(v-if="step === 2")
-    .horizontal-overflow-scroll
-      table.table.text-center
-        thead
-          tr
-            th(v-for="_, p in round"): b: small {{p}}
-        tbody
-          tr(v-for="i in rounds")
-            td(v-for="v, p in history") {{v[i - 1]}}
-        tfoot
-          tr
-            td(v-for="v, p in round")
-              div(v-if="v !== null")
-                b {{v}}
-                | &nbsp;Stiche
-              div(v-else) Raus
-              .btn-group
-                button.btn.btn-primary.btn-small.btn-icon(:disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"): font-awesome-icon(icon="plus")
-                button.btn.btn-primary.btn-small.btn-icon(v-if="v > 0" @click.prevent="subPoint(p)"): font-awesome-icon(icon="minus")
-                button.btn.btn-primary.btn-small.btn-icon(v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"): font-awesome-icon(icon="sign-out-alt")
-
-    footer.mb-2
-      .round
-        b Runde {{rounds}}
-      .multiplier
-        button.btn.btn-primary.btn-small.btn-icon(@click.prevent="subMult()" :disabled="multiplier === 1"): font-awesome-icon(icon="minus")
-        .badge.danger.rad
-          small x
-          | {{multiplier}}
-        button.btn.btn-primary.btn-small.btn-icon(@click.prevent="addMult()"): font-awesome-icon(icon="plus")
-      button.btn.btn-danger.btn-small.btn-icon(:disabled="rounds < 2" @click.prevent="undoRound")
-        font-awesome-icon(icon="undo")
-      button.btn.btn-primary.btn-icon.next(@click.prevent="nextRound")
-        font-awesome-icon(icon="angle-right")
+      <button class="btn btn-primary" :disabled="startPoints < 1 || Object.values(history).length < 1" @click.prevent="startGame">
+        <font-awesome-icon class="icon" icon="long-arrow-alt-right" />
+        <span>Start</span>
+      </button>
+    </template>
+    <template v-else-if="step === 2">
+      <div class="horizontal-overflow-scroll">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th v-for="(_, p) in round" :key="p"><b><small>{{p}}</small></b></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="i in rounds" :key="i">
+              <td v-for="(v, p) in history" :key="p">{{v[i - 1]}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td v-for="(v, p) in round" :key="p">
+                <div v-if="v !== null">
+                  <b>{{v}}</b>
+                  &nbsp;Stiche
+                </div>
+                <div v-else>Raus</div>
+                <div class="btn-group">
+                  <button class="btn btn-primary btn-small btn-icon" :disabled="v > 4 || sumPoints > 4" @click.prevent="addPoint(p)"><font-awesome-icon class="icon" icon="plus" /></button>
+                  <button class="btn btn-primary btn-small btn-icon" v-if="v > 0" @click.prevent="subPoint(p)"><font-awesome-icon class="icon" icon="minus" /></button>
+                  <button class="btn btn-primary btn-small btn-icon" v-if="history[p][history[p].length - 1] > 5 && v === 0" @click.prevent="skipRound(p)"><font-awesome-icon class="icon" icon="sign-out-alt" /></button>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <footer class="mb-2">
+        <div class="round">
+          <b>Runde {{rounds}}</b>
+        </div>
+        <div class="multiplier">
+          <button class="btn btn-primary btn-small btn-icon" @click.prevent="subMult()" :disabled="multiplier === 1">
+            <font-awesome-icon class="icon" icon="minus" />
+          </button>
+          <div class="badge danger rad">
+            <small>x</small>
+            {{multiplier}}
+          </div>
+          <button class="btn btn-primary btn-small btn-icon" @click.prevent="addMult()"><font-awesome-icon class="icon" icon="plus" /></button>
+        </div>
+        <button class="btn btn-danger btn-small btn-icon" :disabled="rounds < 2" @click.prevent="undoRound"><font-awesome-icon class="icon" icon="undo" /></button>
+        <button class="btn btn-primary btn-icon next" @click.prevent="nextRound"><font-awesome-icon class="icon" icon="angle-right" /></button>
+      </footer>
+    </template>
+  </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script lang="ts">
+import Vue, { computed, defineComponent, nextTick, ref } from 'vue'
+import TextInput from './components/TextInput.vue'
+import './assets/style/main.scss'
 
-import TextInput from '@/components/TextInput.vue'
-
-export default Vue.extend({
+export default defineComponent({
   name: 'App',
   components: {
     TextInput
   },
-  data() {
-    return {
-      step: 1,
-      newPlayerName: '',
-      startPoints: 15,
-      rounds: 1,
-      multiplier: 1,
-      history: {},
-      round: {}
+  setup(props, ctx) {
+    const step = ref(1)
+    const newPlayerName = ref('')
+    const startPoints = ref(15)
+    const rounds = ref(1)
+    const multiplier = ref(1)
+    const history = ref<Record<string, number[]>>({})
+    const round = ref<Record<string, number | null>>({})
+
+    const newPlayerInput = ref<HTMLInputElement>()
+
+    const sumPoints = computed(() => Object.values(round.value).reduce((sum, points) => sum! + points!, 0))
+
+    const addPlayer = () =>{
+      history.value[newPlayerName.value] = [startPoints.value]
+      round.value[newPlayerName.value] = 0
+      newPlayerName.value = ''
+      newPlayerInput.value?.focus()
     }
-  },
-  computed: {
-    sumPoints() {
-      return Object.values(this.round).reduce((sum, points) => sum + points, 0)
+
+    const removePlayer = (pl: string) => {
+      delete history.value[pl]
+      delete round.value[pl]
     }
-  },
-  methods: {
-    addPlayer() {
-      this.$set(this.history, this.newPlayerName, [Number(this.startPoints)])
-      this.$set(this.round, this.newPlayerName, 0)
-      this.newPlayerName = ''
-      document.querySelector('#new-player-input').focus()
-    },
-    removePlayer(pl) {
-      this.$delete(this.history, pl)
-      this.$delete(this.round, pl)
-    },
-    startGame() {
-      this.step++
-    },
-    addPoint(p) {
-      this.round[p]++
-    },
-    subPoint(p) {
-      this.round[p]--
-    },
-    skipRound(p) {
-      this.round[p] = null
-    },
-    addMult() {
-      this.multiplier <<= 1
-    },
-    subMult() {
-      this.multiplier >>= 1
-    },
-    nextRound() {
-      for (const p in this.round) {
-        if (this.round[p] === 0) this.history[p].push(this.history[p][this.history[p].length - 1] + 5 * this.multiplier)
-        else if (this.round[p] > 0)
-          this.history[p].push(this.history[p][this.history[p].length - 1] - this.round[p] * this.multiplier)
-        else if (this.round[p] === null)
-          this.history[p].push(this.history[p][this.history[p].length - 1] + 2 * this.multiplier)
-        this.round[p] = 0
+
+    const startGame = () =>{
+      step.value++
+    }
+
+    const addPoint = (p: string) => {
+
+      round.value[p]!++
+    }
+
+    const subPoint = (p: string) => {
+      round.value[p]!--
+    }
+
+    const skipRound = (p: string) => {
+      round.value[p] = null
+    }
+
+    const addMult = () =>{
+      multiplier.value <<= 1
+    }
+
+    const subMult = () =>{
+      multiplier.value >>= 1
+    }
+
+    const nextRound = () =>{
+      for (const p in round.value) {
+        if (round.value[p] === 0)
+          history.value[p].push(history.value[p][history.value[p].length - 1] + 5 * multiplier.value)
+        else if (round.value[p]! > 0)
+          history.value[p].push(history.value[p][history.value[p].length - 1] - round.value[p]! * multiplier.value)
+        else if (round.value[p] === null)
+          history.value[p].push(history.value[p][history.value[p].length - 1] + 2 * multiplier.value)
+        round.value[p] = 0
       }
-      this.multiplier = 1
-      this.rounds++
+      multiplier.value = 1
+      rounds.value++
 
       // scroll to bottom
-      this.$nextTick(() => window.scrollTo(0, document.body.scrollHeight))
-    },
-    undoRound() {
-      for (const p in this.round) {
-        this.history[p].splice(-1, 1)
-        this.round[p] = 0
+      nextTick(() => window.scrollTo(0, document.body.scrollHeight))
+    }
+
+    const undoRound = () =>{
+      for (const p in round.value) {
+        history.value[p].splice(-1, 1)
+        round.value[p] = 0
       }
-      this.rounds--
+      rounds.value--
+    }
+
+    return {
+      step,
+      newPlayerName,
+      startPoints,
+      rounds,
+      multiplier,
+      history,
+      round,
+      sumPoints,
+
+      addPlayer,
+      removePlayer,
+      startGame,
+      addPoint,
+      subPoint,
+      skipRound,
+      addMult,
+      subMult,
+      nextRound,
+      undoRound
     }
   }
 })
 </script>
-
-<style lang="scss">
-@import '~@/assets/style/main';
-</style>
