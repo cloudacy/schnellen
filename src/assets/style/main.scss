@@ -1,12 +1,13 @@
-@import 'vars';
-@import 'fonts';
-@import 'basic';
-@import 'layout';
+@import "vars";
+@import "fonts";
+@import "basic";
+@import "layout";
 
 #app {
   min-height: 100vh;
   padding: 16px;
-  color: #333;
+  color: $color-text;
+  background-color: $color-background;
 }
 
 .horizontal-overflow-scroll {
@@ -18,17 +19,17 @@
   display: block;
   padding: 8px 16px;
   margin-bottom: 16px;
-  border: 2px solid #f2f2f2;
+  border: 2px solid $color-border-light;
   border-radius: 4px;
 
   transition: border-color 0.2s;
 
   &.focus {
-    border-color: $primary;
+    border-color: $color-primary;
   }
 
   .label {
-    color: $gray-dark;
+    color: $color-text;
     font-size: 16px;
   }
 
@@ -41,7 +42,7 @@
     padding: 0;
     border: none;
     background: none;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 }
 
@@ -90,18 +91,18 @@
 }
 
 .btn-primary {
-  color: $white;
-  background: $primary;
+  color: $color-button-text-primary;
+  background: $color-primary;
 }
 
 .btn-danger {
-  color: $white;
-  background: $danger;
+  color: $color-button-text-danger;
+  background: $color-danger;
 }
 
 .btn:disabled {
-  color: $gray;
-  background: #ddd;
+  color: $color-text-light;
+  background: $color-button-light;
   box-shadow: none;
 }
 
@@ -124,10 +125,7 @@ table {
       top: 0;
 
       padding-bottom: 3px;
-
-      color: $white;
-      background: $primary;
-      box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid $color-border-light;
 
       &:first-child {
         border-top-left-radius: 4px;
@@ -148,7 +146,7 @@ header {
   left: 0;
   right: 0;
   padding: 16px;
-  background: white;
+  background: $color-background;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -161,7 +159,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background: white;
+  background: $color-background-footer;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -169,7 +167,7 @@ footer {
   display: inline-block;
 
   padding: 4px;
-  background: #f2f2f2;
+  background: $color-background-light;
   border-radius: 8px;
 
   div {

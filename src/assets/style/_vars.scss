@@ -1,18 +1,46 @@
-$primary: #03a9f4;
+:root {
+  --color-primary: #03a9f4;
+  --color-danger: #ff3614;
+  --color-text: #333;
+  --color-text-light: #999;
+  --color-button-light: #ddd;
+  --color-button-text-primary: #fff;
+  --color-button-text-danger: #fff;
+  --color-background: #fff;
+  --color-background-light: #f2f2f2;
+  --color-background-footer: #fff;
+  --color-border-light: #f2f2f2;
+}
 
-$danger: #ff3614;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #ddd;
+    --color-text-light: #888;
+    --color-button-light: #444;
+    --color-background: #222;
+    --color-background-light: #333;
+    --color-background-footer: #2a2a2a;
+    --color-border-light: #333;
+  }
+}
 
-$white: #fff;
-$gray: #999;
-$gray-dark: #666;
+$color-primary: var(--color-primary);
+$color-danger: var(--color-danger);
+$color-text: var(--color-text);
+$color-text-light: var(--color-text-light);
+$color-button-light: var(--color-button-light);
+$color-button-text-primary: var(--color-button-text-primary);
+$color-button-text-danger: var(--color-button-text-danger);
+$color-background: var(--color-background);
+$color-background-light: var(--color-background-light);
+$color-background-footer: var(--color-background-footer);
+$color-border-light: var(--color-border-light);
 
-$font-weight-bold: 700;
+$font-weight-bold: 500;
 
-$body-font-family: Quicksand;
+$body-font-family: Jost;
 $body-font-weight: 300;
 $body-font-size: 18px;
-
-$header-font-weight: $font-weight-bold;
 
 $h1-font-size: 42px;
 $h2-font-size: 32px;
