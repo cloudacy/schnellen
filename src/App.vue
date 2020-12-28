@@ -159,9 +159,16 @@ export default defineComponent({
 
     const nextRound = () => {
       for (const p in round.value) {
-        if (round.value[p] === 0) history.value[p].push(history.value[p][history.value[p].length - 1] + 5 * multiplier.value)
-        else if (round.value[p]! > 0) history.value[p].push(history.value[p][history.value[p].length - 1] - round.value[p]! * multiplier.value)
-        else if (round.value[p] === null) history.value[p].push(history.value[p][history.value[p].length - 1] + 2 * multiplier.value)
+        if (round.value[p] === 0) {
+          // Player lost round.
+          history.value[p].push(history.value[p][history.value[p].length - 1] + 5 * multiplier.value)
+        } else if (round.value[p]! > 0) {
+          // Player won round with x cards.
+          history.value[p].push(history.value[p][history.value[p].length - 1] - round.value[p]! * multiplier.value)
+        } else if (round.value[p] === null) {
+          // Player skipped round.
+          history.value[p].push(history.value[p][history.value[p].length - 1] + 1 * multiplier.value)
+        }
         round.value[p] = 0
       }
       multiplier.value = 1
