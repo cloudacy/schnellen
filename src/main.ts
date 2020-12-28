@@ -2,17 +2,17 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-    faAngleRight,
-    faCog,
-    faClock,
-    faLongArrowAltRight,
-    faMinus,
-    faPlay,
-    faPlus,
-    faSignOutAlt,
-    faTimes,
-    faUndo,
-    faUsers
+  faAngleRight,
+  faCog,
+  faClock,
+  faLongArrowAltRight,
+  faMinus,
+  faPlay,
+  faPlus,
+  faSignOutAlt,
+  faTimes,
+  faUndo,
+  faUsers
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
