@@ -8,7 +8,7 @@ RUN apk add --update --no-cache nginx rsync nodejs-current && \
     pnpm install && \
     pnpm run build && \
     mkdir -p /run/nginx && \
-    mv /app/nginx.conf /etc/nginx/conf.d/default.conf && \
+    mv /app/nginx.conf /etc/nginx/http.d/default.conf && \
     mkdir -p /usr/share/nginx/html/ && \
     rsync -a /app/dist/ /usr/share/nginx/html/ && \
     pnpm store prune && apk del rsync nodejs-current && \
