@@ -1,78 +1,65 @@
 <template>
-  <label class="field" :class="{ focus }">
+  <label class="field" :class="{focus}">
     <div class="label">
       <font-awesome-icon class="icon" v-if="icon" :icon="icon" />
       <span>{{ label }}</span>
     </div>
-    <input
-      :type="type"
-      :value="modelValue"
-      :placeholder="placeholder"
-      :required="required"
-      :disabled="disabled"
-      :autofocus="autofocus"
-      @input="input"
-      @focus="focus = true"
-      @blur="focus = false"
-    />
+    <input ref="input" :type="type" :value="modelValue" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="inputEvent" @focus="focus = true" @blur="focus = false" />
   </label>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import {ref} from 'vue'
 
-export default defineComponent({
-  name: "TextInput",
-  props: {
-    modelValue: {
-      type: [String, Number],
-      required: false,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    icon: {
-      type: String,
-      required: false,
-    },
-    type: {
-      type: String,
-      required: false,
-      default: "text",
-    },
-    placeholder: {
-      type: String,
-      required: false,
-      default: "",
-    },
-    required: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    autofocus: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+const emit = defineEmits(['update:modelValue'])
+
+defineProps({
+  modelValue: {
+    type: [String, Number],
+    required: false
   },
-  setup(props, ctx) {
-    const focus = ref(false);
-
-    const input = (evt: Event): void => {
-      ctx.emit("update:modelValue", (evt.target as HTMLInputElement).value);
-    };
-
-    return {
-      focus,
-      input,
-    };
+  label: {
+    type: String,
+    required: true
   },
-});
+  icon: {
+    type: String,
+    required: false
+  },
+  type: {
+    type: String,
+    required: false,
+    default: 'text'
+  },
+  placeholder: {
+    type: String,
+    required: false,
+    default: ''
+  },
+  required: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  disabled: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  autofocus: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
+})
+
+const focus = ref(false)
+
+const input = ref<HTMLInputElement>()
+
+const inputEvent = (evt: Event): void => {
+  emit('update:modelValue', (evt.target as HTMLInputElement).value)
+}
+
+defineExpose({input})
 </script>
