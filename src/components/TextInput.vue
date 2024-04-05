@@ -4,20 +4,24 @@
       <font-awesome-icon class="icon" v-if="icon" :icon="icon" />
       <span>{{ label }}</span>
     </div>
-    <input ref="input" :type="type" :value="modelValue" :placeholder="placeholder" :required="required" :disabled="disabled" :autofocus="autofocus" @input="inputEvent" @focus="focus = true" @blur="focus = false" />
+    <input
+      ref="input"
+      :type="type"
+      :placeholder="placeholder"
+      :required="required"
+      :disabled="disabled"
+      :autofocus="autofocus"
+      v-model="model"
+      @focus="focus = true"
+      @blur="focus = false"
+    />
   </label>
 </template>
 
 <script lang="ts" setup>
 import {ref} from 'vue'
 
-const emit = defineEmits(['update:modelValue'])
-
 defineProps({
-  modelValue: {
-    type: [String, Number],
-    required: false
-  },
   label: {
     type: String,
     required: true
@@ -53,13 +57,11 @@ defineProps({
   }
 })
 
+const model = defineModel<string | number>({required: true})
+
 const focus = ref(false)
 
 const input = ref<HTMLInputElement>()
-
-const inputEvent = (evt: Event): void => {
-  emit('update:modelValue', (evt.target as HTMLInputElement).value)
-}
 
 defineExpose({input})
 </script>
