@@ -1,38 +1,16 @@
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {
-  faAngleRight,
-  faClock,
-  faCog,
-  faLongArrowAltRight,
-  faMinus,
-  faPlay,
-  faPlus,
-  faSignOutAlt,
-  faTimes,
-  faUndo,
-  faUsers
-} from '@fortawesome/free-solid-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {createPinia} from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import {createApp} from 'vue'
 
-import App from './App.vue'
+import router from '@/router'
 
-library.add(
-  faAngleRight,
-  faCog,
-  faClock,
-  faLongArrowAltRight,
-  faMinus,
-  faPlay,
-  faPlus,
-  faSignOutAlt,
-  faTimes,
-  faUndo,
-  faUsers
-)
+import '@/index.css'
+
+import App from '@/App.vue'
 
 const app = createApp(App)
 
-app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(createPinia().use(piniaPluginPersistedstate))
+app.use(router)
 
 app.mount('#app')
