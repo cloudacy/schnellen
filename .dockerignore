@@ -1,5 +1,2 @@
 Dockerfile
-Dockerfile.dev
-docker-compose.yml
-.pnpm-store
 node_modules
