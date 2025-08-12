@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {nextTick} from 'vue'
+import {useWakeLock} from '@vueuse/core'
 import {BrushCleaning, ChevronRight, DoorClosed, Minus, Plus, Undo2} from 'lucide-vue-next'
+import {nextTick, onMounted, onUnmounted} from 'vue'
 
 import router from '@/router'
 
@@ -9,6 +10,7 @@ import {useGameStore} from '@/stores/game'
 import {Button} from '@/components/ui/button'
 import {Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 
+const wakeLock = useWakeLock()
 const game = useGameStore()
 
 const nextRound = () => {
@@ -22,6 +24,14 @@ const reset = () => {
   game.reset()
   router.replace('/')
 }
+
+onMounted(() => {
+  wakeLock.request('screen')
+})
+
+onUnmounted(() => {
+  wakeLock.release()
+})
 </script>
 
 <template>
