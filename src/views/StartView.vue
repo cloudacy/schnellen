@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ArrowRight, Plus, X} from 'lucide-vue-next'
-import {ref, useTemplateRef} from 'vue'
+import {nextTick, ref} from 'vue'
 
 import router from '@/router'
 
@@ -15,13 +15,14 @@ const game = useGameStore()
 
 const newPlayerName = ref('')
 const startPoints = ref(15)
-
-const newPlayerInput = useTemplateRef<HTMLInputElement>('newPlayerInput')
+const newPlayerInput = ref<{$el: HTMLInputElement} | null>(null)
 
 const addPlayer = () => {
   game.addPlayer(newPlayerName.value, startPoints.value)
   newPlayerName.value = ''
-  newPlayerInput.value?.focus()
+  nextTick(() => {
+    newPlayerInput.value?.$el.focus()
+  })
 }
 </script>
 
