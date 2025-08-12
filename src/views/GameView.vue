@@ -25,7 +25,7 @@ const reset = () => {
 </script>
 
 <template>
-  <div class="grid grid-rows-[1fr_auto_auto] max-w-[100vw] min-h-[100vh] gap-5">
+  <div class="grid grid-rows-[1fr_auto_auto] max-w-[100svw] min-h-[100svh] gap-5">
     <div class="overflow-auto">
       <Table>
         <TableHeader>
