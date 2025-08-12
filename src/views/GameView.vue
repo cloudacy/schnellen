@@ -25,59 +25,56 @@ const reset = () => {
 </script>
 
 <template>
-  <div>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead v-for="(_, p) in game.round" :key="p">
-            {{ p }}
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow v-for="i in game.rounds" :key="i">
-          <TableCell v-for="(v, p) in game.history" :key="p">{{ v[i - 1] }}</TableCell>
-        </TableRow>
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell v-for="(v, p) in game.round" :key="p">
-            <div class="flex flex-col gap-2">
-              <div v-if="v !== null">
-                <strong>{{ v }}</strong>
-                Stiche
+  <div class="grid grid-rows-[1fr_auto_auto] max-w-[100vw] min-h-[100vh] gap-5">
+    <div class="overflow-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead v-for="(_, p) in game.round" :key="p">
+              {{ p }}
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow v-for="i in game.rounds" :key="i">
+            <TableCell v-for="(v, p) in game.history" :key="p">{{ v[i - 1] }}</TableCell>
+          </TableRow>
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell v-for="(v, p) in game.round" :key="p">
+              <div class="flex flex-col gap-2">
+                <div v-if="v !== null">
+                  <strong>{{ v }}</strong>
+                  Stiche
+                </div>
+                <div v-else>Raus</div>
+                <div class="grid grid-cols-[auto_auto_1fr] gap-2">
+                  <Button
+                    size="icon"
+                    :disabled="v !== null && (v >= 5 || game.sumPoints >= 5)"
+                    @click.prevent="game.addPoint(p)"
+                  >
+                    <Plus />
+                  </Button>
+                  <Button v-if="v !== null && v > 0" size="icon" @click.prevent="game.subPoint(p)">
+                    <Minus />
+                  </Button>
+                  <Button
+                    v-if="game.history[p][game.history[p].length - 1] > 5 && v === 0"
+                    size="icon"
+                    @click.prevent="game.skipRound(p)"
+                  >
+                    <DoorClosed />
+                  </Button>
+                </div>
               </div>
-              <div v-else>Raus</div>
-              <div class="grid grid-cols-[auto_auto_1fr] gap-2">
-                <Button
-                  size="icon"
-                  :disabled="v !== null && (v >= 5 || game.sumPoints >= 5)"
-                  @click.prevent="game.addPoint(p)"
-                >
-                  <Plus />
-                </Button>
-                <Button v-if="v !== null && v > 0" size="icon" @click.prevent="game.subPoint(p)">
-                  <Minus />
-                </Button>
-                <Button
-                  v-if="game.history[p][game.history[p].length - 1] > 5 && v === 0"
-                  size="icon"
-                  @click.prevent="game.skipRound(p)"
-                >
-                  <DoorClosed />
-                </Button>
-              </div>
-            </div>
-          </TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
-  </div>
-  <footer class="grid grid-cols-[auto_1fr_auto_auto_auto] gap-5 items-center mt-5">
-    <div class="round">
-      <strong>Runde {{ game.rounds }}</strong>
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </div>
-    <div class="flex gap-2 items-center">
+    <div class="flex gap-2 items-center px-2">
       Multiplikator:
       <Button size="icon" :disabled="game.multiplier === 1" @click.prevent="game.subMult()">
         <Minus />
@@ -87,14 +84,19 @@ const reset = () => {
         <Plus />
       </Button>
     </div>
-    <Button size="icon" @click.prevent="reset">
-      <BrushCleaning />
-    </Button>
-    <Button size="icon" :disabled="game.rounds < 2" @click.prevent="game.undoRound">
-      <Undo2 />
-    </Button>
-    <Button size="icon" @click.prevent="nextRound">
-      <ChevronRight />
-    </Button>
-  </footer>
+    <footer class="grid grid-cols-[1fr_auto_auto_auto] gap-2 items-center px-2 pb-2">
+      <div class="round">
+        <strong>Runde&nbsp;{{ game.rounds }}</strong>
+      </div>
+      <Button size="icon" @click.prevent="reset">
+        <BrushCleaning />
+      </Button>
+      <Button size="icon" :disabled="game.rounds < 2" @click.prevent="game.undoRound">
+        <Undo2 />
+      </Button>
+      <Button size="icon" @click.prevent="nextRound">
+        <ChevronRight />
+      </Button>
+    </footer>
+  </div>
 </template>
