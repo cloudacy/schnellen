@@ -50,8 +50,6 @@ const addPlayer = () => {
                   <Input
                     id="new-player-input"
                     ref="newPlayerInput"
-                    label="Spieler"
-                    placeholder="John"
                     :autofocus="true"
                     required
                     v-model="newPlayerName"
@@ -63,16 +61,12 @@ const addPlayer = () => {
               </div>
             </form>
 
-            <template v-if="Object.keys(game.round).length > 0">
-              <Label class="mt-3">Spieler</Label>
-
-              <div v-for="(_, p) in game.round" :key="p" class="grid gap-2 grid-cols-[1fr_auto] items-center">
-                <span>{{ p }}</span>
-                <Button size="icon" @click.prevent="game.removePlayer(p)">
-                  <X />
-                </Button>
-              </div>
-            </template>
+            <div v-for="(_, p) in game.round" :key="p" class="grid gap-2 grid-cols-[1fr_auto] items-center">
+              <span>{{ p }}</span>
+              <Button size="icon" @click.prevent="game.removePlayer(p)">
+                <X />
+              </Button>
+            </div>
           </div>
         </CardContent>
         <CardFooter class="grid gap-2">
